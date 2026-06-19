@@ -1,13 +1,15 @@
-## Prodesk IT — Mission 1
+## Prodesk IT — sprint_1
 
-This repository contains the Week 1 Mission 1 landing page for Prodesk IT — a responsive landing page built with HTML and Tailwind CSS.
+Hello! I'm Ujjawal, and I built this Week 1 sprint 1 landing page for Prodesk IT. This project is a responsive, modern landing page with polished Tailwind CSS styling, a clean user experience, and a professional design ready for deployment.
+
+### Live demo
+
+- https://sprint1-zeta.vercel.app/
 
 ### Technologies
 
 - HTML5
 - Tailwind CSS (built via npm)
-- Node.js
-- npm
 - Font Awesome (CDN)
 
 ### Quick start
@@ -24,8 +26,5 @@ npm install
 npm run build:css
 ```
 
-3. Open `mission 1/index.html` in your browser or use Live Server for preview.
+3. Open `sprint_1/index.html` in your browser or use Live Server for preview.
 
-If you want the full original README content restored, tell me and I will revert or expand this file.
-
--->
