@@ -10,7 +10,7 @@ A professional repository documenting the core modules, enterprise features, and
 * **Timeline:** June 2026 - Present
 
 ## Repository Overview
-Yahan par short me likhein ki aapka SPNR project kya karta hai. (e.g., This repository contains the core modules for SPNR, focusing on performance, responsive design, and robust API integration.)
+This repository documents the technical contributions, core modules, and full-stack development achievements during my Software Engineering Internship at Prodesk IT.
 
 ## Module / Mission Index
 
