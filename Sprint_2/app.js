@@ -57,6 +57,7 @@ function loadFromStorage() {
   const savedSalary = localStorage.getItem(LS_KEYS.SALARY);
   const savedExpenses = localStorage.getItem(LS_KEYS.EXPENSES);
   const savedCurrency = localStorage.getItem(LS_KEYS.CURRENCY);
+
   if (savedSalary !== null) state.salary = parseFloat(JSON.parse(savedSalary)) || 0;
   if (savedExpenses !== null) state.expenses = JSON.parse(savedExpenses) || [];
   if (savedCurrency !== null) state.currency = JSON.parse(savedCurrency);
@@ -407,6 +408,7 @@ function deleteExpense(id) {
   const itemEl = DOM.expenseList.querySelector(`[data-id="${id}"]`);
 
   if (itemEl) {
+
     itemEl.classList.add('slide-out');
     itemEl.addEventListener('animationend', function () {
       itemEl.remove();
@@ -423,6 +425,7 @@ function deleteExpense(id) {
       renderChart();
     }, { once: true });
   } else {
+
     state.expenses = state.expenses.filter(exp => exp.id !== id);
     saveToStorage();
     renderExpenseList();
@@ -489,6 +492,7 @@ async function fetchExchangeRate() {
     renderChart();
     renderExpenseList();
   } else {
+
     console.error('All currency APIs failed:', lastError);
     DOM.rateStatus.className = 'rate-note error';
     DOM.rateStatus.textContent = '❌ Could not fetch live rate. Try again later.';

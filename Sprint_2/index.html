@@ -4,11 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Cash-Flow: A smart salary and expense tracker to manage your finances in real-time with charts, PDF reports, and currency conversion." />
+  <meta name="description"
+    content="Cash-Flow: A smart salary and expense tracker to manage your finances in real-time with charts, PDF reports, and currency conversion." />
   <title>Cash-Flow | Salary & Expense Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="style.css" />
@@ -16,11 +19,13 @@
 
 <body>
 
+
   <div id="threshold-banner" class="alert-bar hidden" role="alert">
     <span class="alert-icon">⚠️</span>
     <span id="threshold-message">Warning: Remaining balance is critically low!</span>
     <button id="close-banner-btn" class="close-alert" aria-label="Close alert">✕</button>
   </div>
+
 
   <header class="site-header">
     <div class="header-wrap">
@@ -49,6 +54,7 @@
 
   <main class="page-body">
 
+
     <section class="overview" aria-label="Financial Summary">
       <div class="stat-box stat-salary" id="stat-salary-card">
         <div class="stat-img">💰</div>
@@ -73,6 +79,7 @@
       </div>
     </section>
 
+
     <div class="layout">
 
       <div class="left-col">
@@ -88,7 +95,8 @@
               <label for="salary-input" class="field-label">Total Monthly Salary</label>
               <div class="input-group">
                 <span class="field-prefix" id="salary-prefix">₹</span>
-                <input type="number" id="salary-input" class="text-input" placeholder="e.g. 50000" min="0" step="any" aria-required="true" aria-describedby="salary-error" />
+                <input type="number" id="salary-input" class="text-input" placeholder="e.g. 50000" min="0" step="any"
+                  aria-required="true" aria-describedby="salary-error" />
               </div>
               <span class="field-error" id="salary-error" role="alert" aria-live="polite"></span>
             </div>
@@ -108,14 +116,17 @@
           <form id="expense-form" class="form" novalidate>
             <div class="field">
               <label for="expense-name-input" class="field-label">Expense Name</label>
-              <input type="text" id="expense-name-input" class="text-input" placeholder="e.g. Rent, Groceries, Netflix..." aria-required="true" aria-describedby="expense-name-error" />
+              <input type="text" id="expense-name-input" class="text-input"
+                placeholder="e.g. Rent, Groceries, Netflix..." aria-required="true"
+                aria-describedby="expense-name-error" />
               <span class="field-error" id="expense-name-error" role="alert" aria-live="polite"></span>
             </div>
             <div class="field">
               <label for="expense-amount-input" class="field-label">Expense Amount</label>
               <div class="input-group">
                 <span class="field-prefix" id="expense-prefix">₹</span>
-                <input type="number" id="expense-amount-input" class="text-input" placeholder="e.g. 5000" min="0" step="any" aria-required="true" aria-describedby="expense-amount-error" />
+                <input type="number" id="expense-amount-input" class="text-input" placeholder="e.g. 5000" min="0"
+                  step="any" aria-required="true" aria-describedby="expense-amount-error" />
               </div>
               <span class="field-error" id="expense-amount-error" role="alert" aria-live="polite"></span>
             </div>
@@ -137,6 +148,7 @@
         </section>
 
       </div>
+
 
       <div class="right-col">
 
@@ -186,6 +198,7 @@
       </div>
     </div>
   </main>
+
 
   <footer class="site-footer">
     <p>© 2026 Prodesk IT</p>
