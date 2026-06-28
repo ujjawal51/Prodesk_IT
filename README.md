@@ -12,7 +12,7 @@ A professional repository documenting the core modules, enterprise features, and
 ## Repository Overview
 This repository documents the technical contributions, core modules, and full-stack development achievements during my Software Engineering Internship at Prodesk IT.
 
-## Taskes
+## Tasks
 
 | Sl. No. |Project| Core Focus | Stack Used | Live Link |
 | :--- | :--- | :--- | :--- | :--- |
