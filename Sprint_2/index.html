@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cash-Flow: A smart salary and expense tracker to manage your finances in real-time with charts, PDF reports, and currency conversion." />
+  <title>Cash-Flow | Salary & Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div id="threshold-banner" class="alert-bar hidden" role="alert">
+    <span class="alert-icon">⚠️</span>
+    <span id="threshold-message">Warning: Remaining balance is critically low!</span>
+    <button id="close-banner-btn" class="close-alert" aria-label="Close alert">✕</button>
+  </div>
+
+  <header class="site-header">
+    <div class="header-wrap">
+      <div class="logo">
+        <div class="logo-box">💸</div>
+        <div>
+          <h1 class="site-name">Cash-Flow</h1>
+          <p class="site-sub">Salary & Expense Tracker</p>
+        </div>
+      </div>
+      <div class="header-btns">
+        <div class="currency-switch">
+          <span class="currency-tag" id="currency-display">₹ INR</span>
+          <button id="currency-toggle-btn" class="btn btn-outline" title="Toggle Currency">
+            <span id="currency-btn-text">Switch to USD</span>
+            <span class="btn-icon">🌐</span>
+          </button>
+        </div>
+        <button id="download-pdf-btn" class="btn btn-primary" title="Download PDF Report">
+          <span>Download Report</span>
+          <span class="btn-icon">📄</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-body">
+
+    <section class="overview" aria-label="Financial Summary">
+      <div class="stat-box stat-salary" id="stat-salary-card">
+        <div class="stat-img">💰</div>
+        <div class="stat-text">
+          <span class="card-label">Total Salary</span>
+          <span class="card-amount" id="display-salary">₹0.00</span>
+        </div>
+      </div>
+      <div class="stat-box stat-expenses" id="stat-expenses-card">
+        <div class="stat-img">🧾</div>
+        <div class="stat-text">
+          <span class="card-label">Total Expenses</span>
+          <span class="card-amount" id="display-expenses">₹0.00</span>
+        </div>
+      </div>
+      <div class="stat-box stat-balance" id="stat-balance-card">
+        <div class="stat-img">📊</div>
+        <div class="stat-text">
+          <span class="card-label">Remaining Balance</span>
+          <span class="card-amount" id="display-balance">₹0.00</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+
+      <div class="left-col">
+
+        <section class="card" aria-labelledby="salary-form-heading">
+          <div class="card-header">
+            <h2 id="salary-form-heading" class="card-title">
+              <span class="title-icon">💼</span> Set Your Salary
+            </h2>
+          </div>
+          <form id="salary-form" class="form" novalidate>
+            <div class="field">
+              <label for="salary-input" class="field-label">Total Monthly Salary</label>
+              <div class="input-group">
+                <span class="field-prefix" id="salary-prefix">₹</span>
+                <input type="number" id="salary-input" class="text-input" placeholder="e.g. 50000" min="0" step="any" aria-required="true" aria-describedby="salary-error" />
+              </div>
+              <span class="field-error" id="salary-error" role="alert" aria-live="polite"></span>
+            </div>
+            <button type="submit" id="set-salary-btn" class="btn btn-primary btn-full">
+              <span>Set Salary</span>
+              <span class="btn-icon">✅</span>
+            </button>
+          </form>
+        </section>
+
+        <section class="card" aria-labelledby="expense-form-heading">
+          <div class="card-header">
+            <h2 id="expense-form-heading" class="card-title">
+              <span class="title-icon">➕</span> Add Expense
+            </h2>
+          </div>
+          <form id="expense-form" class="form" novalidate>
+            <div class="field">
+              <label for="expense-name-input" class="field-label">Expense Name</label>
+              <input type="text" id="expense-name-input" class="text-input" placeholder="e.g. Rent, Groceries, Netflix..." aria-required="true" aria-describedby="expense-name-error" />
+              <span class="field-error" id="expense-name-error" role="alert" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="expense-amount-input" class="field-label">Expense Amount</label>
+              <div class="input-group">
+                <span class="field-prefix" id="expense-prefix">₹</span>
+                <input type="number" id="expense-amount-input" class="text-input" placeholder="e.g. 5000" min="0" step="any" aria-required="true" aria-describedby="expense-amount-error" />
+              </div>
+              <span class="field-error" id="expense-amount-error" role="alert" aria-live="polite"></span>
+            </div>
+            <button type="submit" id="add-expense-btn" class="btn btn-secondary btn-full">
+              <span>Add Expense</span>
+              <span class="btn-icon">➕</span>
+            </button>
+          </form>
+        </section>
+
+        <section class="card currency-card" id="currency-info-card">
+          <div class="card-header">
+            <h2 class="card-title"><span class="title-icon">🌐</span> Currency Rate</h2>
+          </div>
+          <div id="currency-rate-display" class="rate-box">
+            <span class="rate-display">1 USD = <strong id="usd-to-inr-rate">--</strong> INR</span>
+            <span class="rate-note" id="rate-status">Click "Switch to USD" to fetch live rate</span>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="right-col">
+
+        <section class="card" aria-labelledby="expense-list-heading">
+          <div class="card-header">
+            <h2 id="expense-list-heading" class="card-title">
+              <span class="title-icon">📋</span> Expense Log
+            </h2>
+            <span class="count-tag" id="expense-count">0 items</span>
+          </div>
+          <div id="expense-list-container">
+            <div class="empty" id="empty-state">
+              <div class="empty-img">🪙</div>
+              <p class="empty-msg">No expenses logged yet.</p>
+              <p class="empty-hint">Add your first expense to get started!</p>
+            </div>
+            <ul class="expense-items" id="expense-list" aria-label="List of expenses" role="list"></ul>
+          </div>
+        </section>
+
+        <section class="card chart-card" aria-labelledby="chart-heading">
+          <div class="card-header">
+            <h2 id="chart-heading" class="card-title">
+              <span class="title-icon">🥧</span> Spending Overview
+            </h2>
+          </div>
+          <div class="chart-box">
+            <canvas id="expense-pie-chart" aria-label="Pie chart of remaining balance vs total expenses"></canvas>
+            <div class="chart-empty" id="chart-empty-state">
+              <p>Set your salary to see the chart</p>
+            </div>
+          </div>
+          <div class="chart-key" id="chart-legend">
+            <div class="legend-item">
+              <span class="legend-dot dot-red"></span>
+              <span class="legend-label">Expenses</span>
+              <span class="legend-value" id="legend-expenses-val">₹0</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot dot-purple"></span>
+              <span class="legend-label">Balance</span>
+              <span class="legend-value" id="legend-balance-val">₹0</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Prodesk IT</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
