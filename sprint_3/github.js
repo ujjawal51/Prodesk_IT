@@ -1,4 +1,4 @@
-// GitHub Profile Explorer
+
 
 const q = document.getElementById('q');
 const clear = document.getElementById('clear');
@@ -97,32 +97,31 @@ async function search(user) {
 
         const data = await res.json();
 
-        // Update profile
+
         document.getElementById('avatar').src = data.avatar_url;
         document.getElementById('name').innerText = data.name || data.login;
-        
+
         const userLink = document.getElementById('user');
         userLink.innerText = `@${data.login}`;
         userLink.href = data.html_url;
-        
+
         document.getElementById('bio').innerText = data.bio || 'This developer profile has no bio.';
 
-        // Stats
+
         document.getElementById('repos').innerText = data.public_repos;
         document.getElementById('followers').innerText = data.followers;
         document.getElementById('following').innerText = data.following;
 
-        // Meta list
+
         setMeta('c-company', 'val-company', data.company);
         setMeta('c-loc', 'val-loc', data.location);
         setMeta('c-date', 'val-date', `Joined ${fmtDate(data.created_at)}`);
-        
+
         setLink('c-web', 'val-web', data.blog);
         setLink('c-tw', 'val-tw', data.twitter_username ? `https://twitter.com/${data.twitter_username}` : null, data.twitter_username ? `@${data.twitter_username}` : null);
 
         document.getElementById('link').href = data.html_url;
 
-        // Fetch top 6 repos
         const reposRes = await fetch(`${data.repos_url}?per_page=100`);
         if (reposRes.ok) {
             const repos = await reposRes.json();
@@ -130,7 +129,7 @@ async function search(user) {
 
             list.innerHTML = '';
             const topRepos = repos.slice(0, 6);
-            
+
             if (topRepos.length === 0) {
                 list.innerHTML = '<p class="empty" style="grid-column: 1/-1; text-align: center; color: var(--text-secondary); font-size: 14px; padding: 20px;">No public repositories available.</p>';
             } else {
