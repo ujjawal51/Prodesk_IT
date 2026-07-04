@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitShowcase - GitHub Profile Explorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="github.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="brand">
+                <svg class="logo" viewBox="0 0 16 16" width="32" height="32" aria-hidden="true">
+                    <path fill="currentColor"
+                        d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.35 2.69.91 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z">
+                    </path>
+                </svg>
+                <h1>GitShowcase</h1>
+            </div>
+        </header>
+
+        <main>
+            <div class="search">
+                <div class="field">
+                    <svg class="ic-search" viewBox="0 0 24 24" width="18" height="18">
+                        <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input type="text" id="q" placeholder="Search GitHub username... (e.g. ujjawal51)">
+                    <button id="clear" class="clear" aria-label="Clear search" style="display: none;">×</button>
+                </div>
+                <button id="btn">Search</button>
+            </div>
+
+            <div class="info">
+                <div class="msg" id="msg"></div>
+            </div>
+
+            <!-- Skeleton Loader -->
+            <div class="card skeleton" id="load" style="display: none;">
+                <div class="card-h">
+                    <div class="pic"></div>
+                    <div class="info">
+                        <div class="line name"></div>
+                        <div class="line user"></div>
+                    </div>
+                </div>
+                <div class="line bio"></div>
+                <div class="line bio-s"></div>
+                <div class="stats">
+                    <div class="stat"></div>
+                    <div class="stat"></div>
+                    <div class="stat"></div>
+                </div>
+                <div class="meta">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+                <div class="repos">
+                    <div class="line title"></div>
+                    <div class="grid">
+                        <div class="repo"></div>
+                        <div class="repo"></div>
+                        <div class="repo"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Profile Card -->
+            <div class="card" id="card" style="display: none;">
+                <div class="card-h">
+                    <div class="pic">
+                        <img id="avatar" src="" alt="Avatar">
+                    </div>
+                    <div class="info">
+                        <h2 id="name"></h2>
+                        <a id="user" href="" target="_blank"></a>
+                    </div>
+                </div>
+
+                <p id="bio"></p>
+
+                <div class="stats">
+                    <div class="stat">
+                        <span>Repositories</span>
+                        <span id="repos">0</span>
+                    </div>
+                    <div class="stat">
+                        <span>Followers</span>
+                        <span id="followers">0</span>
+                    </div>
+                    <div class="stat">
+                        <span>Following</span>
+                        <span id="following">0</span>
+                    </div>
+                </div>
+
+                <div class="meta">
+                    <div class="item" id="c-company">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                            </path>
+                        </svg>
+                        <span id="val-company"></span>
+                    </div>
+                    <div class="item" id="c-loc">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+                            <circle cx="12" cy="10" r="3" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                        </svg>
+                        <span id="val-loc"></span>
+                    </div>
+                    <div class="item" id="c-web">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71">
+                            </path>
+                            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71">
+                            </path>
+                        </svg>
+                        <a id="val-web" href="" target="_blank"></a>
+                    </div>
+                    <div class="item" id="c-tw">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor"
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z">
+                            </path>
+                        </svg>
+                        <a id="val-tw" href="" target="_blank"></a>
+                    </div>
+                    <div class="item" id="c-date">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        <span id="val-date"></span>
+                    </div>
+                </div>
+
+                <div class="repos">
+                    <div class="repos-h">
+                        <h3>Popular Repositories</h3>
+                        <a id="link" class="more" target="_blank">
+                            <span>View All on GitHub</span>
+                            <svg viewBox="0 0 24 24" width="14" height="14">
+                                <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="grid" id="list"></div>
+                </div>
+            </div>
+
+            <!-- Custom User Not Found / Error State -->
+            <div class="err" id="err" style="display: none;">
+                <div class="err-ic">
+                    <svg viewBox="0 0 24 24" width="64" height="64">
+                        <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3>User Not Found</h3>
+                <p>We couldn't find any GitHub user matching that username. Please check your spelling and try again.
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <script src="github.js"></script>
+</body>
+
+</html>
