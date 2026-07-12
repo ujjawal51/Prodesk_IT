@@ -18,6 +18,7 @@ This repository documents the technical contributions, core modules, and full-st
 | :--- | :--- | :--- | :--- | :--- |
 | 1 |Prodesk Landing Page|Responsive marketing landing page|HTML5, Tailwind CSS, Node.js| [Live Link](https://prodesk-theta.vercel.app/) |
 | 2 |Cash Flow Dashboard|Personal finance tracking and reporting|HTML5, JavaScript, Tailwind CSS, Chart.js, jsPDF| [Live Link](https://prodesksprint2.vercel.app/) |
+| 3 |GitShowcase |GitHub profile search and comparison logic |HTML5, JavaScript, CSS3, GitHub REST API   | [Live Link](https://prodesksprint3.vercel.app/) |
 
 ---
 ## Sprint_1 - Prodesk Landing Page
@@ -50,3 +51,17 @@ Sprint_2 is a browser-based finance dashboard for salary and expense management.
 
   ## Directory: Sprint_2
 * Live: https://prodesksprint2.vercel.app/
+
+### Sprint_3 - GitShowcase
+
+Sprint_3 is a GitHub user search utility focused on API integration and robust loading/error behavior.
+
+Key features:
+
+- GitHub user profile search.
+- API-driven profile rendering.
+- Loading state and not-found handling.
+- Battle mode support for user comparison flow.
+
+Directory: Sprint_3
+https://prodesksprint3.vercel.app/
