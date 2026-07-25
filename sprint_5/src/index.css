@@ -512,3 +512,607 @@ body {
     width: 100%;
   }
 }
+
+/* =============================================
+   Utility
+   ============================================= */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* =============================================
+   App Tab Switcher
+   ============================================= */
+.app-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+
+.app-tab {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 18px;
+  font-size: 0.83rem;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+  white-space: nowrap;
+}
+
+.app-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
+
+.app-tab--active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.app-tab--active:hover {
+  background: var(--accent-hover);
+}
+
+/* =============================================
+   Vinyl Wishlist Page Layout
+   ============================================= */
+.wl-page {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 72px);
+}
+
+.wl-header {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, #181c2e 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.wl-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wl-logo-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #4a58e0, #7c3aed);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 0 24px rgba(91, 106, 240, 0.3);
+  flex-shrink: 0;
+}
+
+.wl-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--text-primary), #a5b4fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.wl-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.wl-stats {
+  display: flex;
+  gap: 24px;
+}
+
+.wl-stat {
+  text-align: center;
+}
+
+.wl-stat-num {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.wl-stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+  display: block;
+}
+
+/* =============================================
+   Two-column layout
+   ============================================= */
+.wl-layout {
+  display: flex;
+  flex: 1;
+  gap: 0;
+  overflow: hidden;
+}
+
+.wl-sidebar {
+  width: 340px;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.wl-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 32px;
+  background: var(--bg-primary);
+}
+
+/* =============================================
+   Wishlist Form
+   ============================================= */
+.wl-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wl-form-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.wl-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.wl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.wl-field--full {
+  grid-column: 1 / -1;
+}
+
+.wl-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.wl-label span {
+  color: var(--priority-high);
+}
+
+.wl-input,
+.wl-select,
+.wl-textarea {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  color: var(--text-primary);
+  font-size: 0.83rem;
+  font-family: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  width: 100%;
+}
+
+.wl-input::placeholder,
+.wl-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.wl-input:focus,
+.wl-select:focus,
+.wl-textarea:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.wl-input--error {
+  border-color: var(--priority-high) !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15) !important;
+}
+
+.wl-select {
+  cursor: pointer;
+}
+
+.wl-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+.wl-error {
+  font-size: 0.73rem;
+  color: var(--priority-high);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wl-success {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.83rem;
+  color: var(--priority-low);
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.wl-btn-submit {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 11px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  width: 100%;
+  margin-top: 4px;
+}
+
+.wl-btn-submit:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+.wl-btn-submit:active {
+  transform: translateY(0);
+}
+
+/* =============================================
+   Search bar in list area
+   ============================================= */
+.wl-search-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.wl-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 15px;
+  pointer-events: none;
+  color: var(--text-muted);
+}
+
+.wl-search {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 11px 16px 11px 44px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.wl-search::placeholder {
+  color: var(--text-muted);
+}
+
+.wl-search:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* =============================================
+   Loading state (3G spinner)
+   ============================================= */
+.wl-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 32px;
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.wl-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =============================================
+   Empty state
+   ============================================= */
+.wl-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 32px;
+  text-align: center;
+}
+
+.wl-empty-icon {
+  font-size: 48px;
+  opacity: 0.35;
+  margin-bottom: 16px;
+}
+
+.wl-empty-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.wl-empty-msg {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+/* =============================================
+   Wishlist item cards
+   ============================================= */
+.wl-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wl-list-item {
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.wl-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  border-left: 3px solid transparent;
+}
+
+.wl-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.wl-item--found {
+  opacity: 0.65;
+}
+
+.wl-item--high   { border-left-color: var(--priority-high); }
+.wl-item--medium { border-left-color: var(--priority-medium); }
+.wl-item--low    { border-left-color: var(--priority-low); }
+
+.wl-vinyl-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.wl-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.wl-item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.wl-item-album {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wl-item-artist {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.wl-item-badges {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.wl-badge {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.wl-badge--high   { color: var(--priority-high);   background: var(--priority-high-bg); }
+.wl-badge--medium { color: var(--priority-medium);  background: var(--priority-medium-bg); }
+.wl-badge--low    { color: var(--priority-low);     background: var(--priority-low-bg); }
+
+.wl-badge--genre {
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+.wl-badge--found {
+  color: var(--priority-low);
+  background: var(--priority-low-bg);
+}
+
+.wl-item-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.wl-item-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wl-item-date {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.wl-item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.wl-btn-found {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all var(--transition);
+}
+
+.wl-btn-found:hover {
+  border-color: var(--priority-low);
+  color: var(--priority-low);
+}
+
+.wl-btn-found.active {
+  background: var(--priority-low-bg);
+  border-color: var(--priority-low);
+  color: var(--priority-low);
+}
+
+.wl-btn-remove {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all var(--transition);
+}
+
+.wl-btn-remove:hover {
+  border-color: var(--priority-high);
+  color: var(--priority-high);
+  background: var(--priority-high-bg);
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media (max-width: 900px) {
+  .wl-layout {
+    flex-direction: column;
+  }
+
+  .wl-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .wl-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wl-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wl-main {
+    padding: 16px 20px;
+  }
+}
