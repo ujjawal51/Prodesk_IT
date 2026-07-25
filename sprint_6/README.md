@@ -8,6 +8,7 @@ A modern, fast, responsive E-Commerce Single Page Application built with **React
 
 ShopZone is designed to give users a seamless online shopping experience without any browser page reloads. It fetches real-time product inventory from the DummyJSON REST API, supports category filtering and search, manages a persistent cart with INR currency conversion, and enforces client-side route protection.
 
+- **Live Deployment:** [https://prodesksprint6.vercel.app/](https://prodesksprint6.vercel.app/)
 - **Ticket / Sprint:** Sprint 06 — Engineering Residency
 - **Tech Stack:** Vite + React + React Router DOM v6 + Context API + Vanilla CSS
 - **Data Source:** [DummyJSON Products API](https://dummyjson.com/products)
