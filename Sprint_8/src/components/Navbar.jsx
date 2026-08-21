@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Film, Heart, Sparkles, Settings } from 'lucide-react';
-import { useFavorites } from '../context/FavoritesContext';
+import { useFavorites } from '../hooks/useFavorites';
 
 export function Navbar({ onOpenMoodMatcher, onOpenApiKeyModal }) {
   const location = useLocation();

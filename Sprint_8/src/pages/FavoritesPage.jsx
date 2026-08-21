@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useFavorites } from '../context/FavoritesContext';
+import { useFavorites } from '../hooks/useFavorites';
 import { MovieCard } from '../components/MovieCard';
 import { MovieModal } from '../components/MovieModal';
 import { Heart, Search } from 'lucide-react';

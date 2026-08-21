@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { X, Star, Heart, Calendar, Play } from 'lucide-react';
-import { useFavorites } from '../context/FavoritesContext';
+import { useFavorites } from '../hooks/useFavorites';
 import { getPosterUrl, getBackdropUrl, getYear, formatRating, getGenres } from '../utils/helpers';
 
 export function MovieModal({ movie, onClose }) {

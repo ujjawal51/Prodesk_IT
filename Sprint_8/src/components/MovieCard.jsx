@@ -1,6 +1,6 @@
 import React from 'react';
 import { Heart, Star } from 'lucide-react';
-import { useFavorites } from '../context/FavoritesContext';
+import { useFavorites } from '../hooks/useFavorites';
 import { getPosterUrl, getYear, formatRating } from '../utils/helpers';
 
 export function MovieCard({ movie, onClick }) {

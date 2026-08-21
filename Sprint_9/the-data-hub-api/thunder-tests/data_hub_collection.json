@@ -1,0 +1,100 @@
+{
+  "clientName": "Thunder Client / Postman",
+  "collectionName": "The Data Hub - Sprint 09 Track B REST API",
+  "collectionId": "sprint-09-data-hub-collection",
+  "dateExported": "2026-08-21T10:00:00.000Z",
+  "version": "1.1",
+  "folders": [],
+  "requests": [
+    {
+      "_id": "req-1-status",
+      "name": "1. System Health & Endpoints Metadata",
+      "url": "http://localhost:5000/",
+      "method": "GET",
+      "headers": []
+    },
+    {
+      "_id": "req-2-get-all",
+      "name": "2. GET /posts (Fetch All Blog Posts)",
+      "url": "http://localhost:5000/posts",
+      "method": "GET",
+      "headers": []
+    },
+    {
+      "_id": "req-3-filter-tag",
+      "name": "3. GET /posts?tag=nextjs (Filter By Tag)",
+      "url": "http://localhost:5000/posts?tag=nextjs",
+      "method": "GET",
+      "headers": []
+    },
+    {
+      "_id": "req-4-get-by-id",
+      "name": "4. GET /posts/1 (Fetch Single Post by ID)",
+      "url": "http://localhost:5000/posts/1",
+      "method": "GET",
+      "headers": []
+    },
+    {
+      "_id": "req-5-get-not-found",
+      "name": "5. GET /posts/999 (404 Error Handling)",
+      "url": "http://localhost:5000/posts/999",
+      "method": "GET",
+      "headers": []
+    },
+    {
+      "_id": "req-6-create-post",
+      "name": "6. POST /posts (Create New Post)",
+      "url": "http://localhost:5000/posts",
+      "method": "POST",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"title\": \"Architecting High-Throughput RESTful APIs\",\n  \"content\": \"Deep exploration into custom middleware, JSON body parsing, and in-memory caching patterns for Node.js.\",\n  \"author\": \"Engineering Specialist\",\n  \"category\": \"Backend Architecture\",\n  \"tags\": [\"nodejs\", \"express\", \"api\", \"architecture\"]\n}"
+      }
+    },
+    {
+      "_id": "req-7-update-post",
+      "name": "7. PUT /posts/1 (Update Existing Post)",
+      "url": "http://localhost:5000/posts/1",
+      "method": "PUT",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"title\": \"Mastering Next.js 15 App Router & Server Components (Updated Edition)\",\n  \"likes\": 150\n}"
+      }
+    },
+    {
+      "_id": "req-8-delete-post",
+      "name": "8. DELETE /posts/4 (Delete Post by ID)",
+      "url": "http://localhost:5000/posts/4",
+      "method": "DELETE",
+      "headers": []
+    },
+    {
+      "_id": "req-9-login-jwt",
+      "name": "9. POST /login (Authenticate & Obtain Mock JWT)",
+      "url": "http://localhost:5000/login",
+      "method": "POST",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"email\": \"specialist@prodesk.io\",\n  \"password\": \"Sprint09Pass!\"\n}"
+      }
+    }
+  ]
+}
