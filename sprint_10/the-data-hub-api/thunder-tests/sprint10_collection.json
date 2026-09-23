@@ -1,0 +1,153 @@
+{
+  "info": {
+    "name": "Sprint 10: The Data Hub API (MongoDB & Mongoose ODM)",
+    "description": "Comprehensive Postman/Thunder Client testing collection for Sprint 10 Track B: Persistent Storage, Relational Modeling (.populate), and Aggregation Pipelines.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Health & DB Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "2. Database Seeder (POST /seed)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/seed",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["seed"]
+        }
+      }
+    },
+    {
+      "name": "3. User Authentication (POST /login)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"alex.rivers@cinestream.io\",\n  \"password\": \"SecurePass123!\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["login"]
+        }
+      }
+    },
+    {
+      "name": "4. List All Users (GET /users)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/users",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["users"]
+        }
+      }
+    },
+    {
+      "name": "5. List All Posts with Hydrated Author (.populate)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/posts",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["posts"]
+        }
+      }
+    },
+    {
+      "name": "6. Phase 3 Aggregation: Top 3 Most Recent Posts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/posts/top-recent",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["posts", "top-recent"]
+        }
+      }
+    },
+    {
+      "name": "7. Phase 2 CRUD Injection: Post.create()",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Architecting Scalable Microservices with Node.js & Mongoose\",\n  \"content\": \"Deep dive into Mongoose indexing, aggregation pipelines, and cloud Atlas scaling.\",\n  \"category\": \"Backend Architecture\",\n  \"tags\": [\"mongodb\", \"mongoose\", \"microservices\"],\n  \"readTime\": \"7 min read\",\n  \"likes\": 15\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/posts",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["posts"]
+        }
+      }
+    },
+    {
+      "name": "8. Update Post (PUT /posts/:id)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Architecting Scalable Microservices with Node.js & Mongoose [UPDATED]\",\n  \"likes\": 25\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/posts/REPLACE_WITH_ID",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["posts", "REPLACE_WITH_ID"]
+        }
+      }
+    },
+    {
+      "name": "9. Phase 2 CRUD Deletion: Post.findByIdAndDelete()",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/posts/REPLACE_WITH_ID",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["posts", "REPLACE_WITH_ID"]
+        }
+      }
+    }
+  ]
+}
