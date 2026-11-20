@@ -1,0 +1,17 @@
+import 'dotenv/config';
+import express from 'express';
+import Stripe from 'stripe';
+import nodemailer from 'nodemailer';
+import {resolve} from 'node:path';
+import {database} from './db.js';
+import {createApp} from './app.js';
+import {deliveryWorker} from './worker.js';
+for(const key of ['JWT_SECRET','STRIPE_SECRET_KEY','STRIPE_WEBHOOK_SECRET','APP_URL','SMTP_HOST','SMTP_USER','SMTP_PASS','MAIL_FROM'])if(!process.env[key])throw Error(`Missing ${key}`);
+const db=database(process.env.DB_PATH||'./data/nexus.db');
+const app=createApp({db,stripe:new Stripe(process.env.STRIPE_SECRET_KEY,{maxNetworkRetries:2}),secret:process.env.JWT_SECRET,webhookSecret:process.env.STRIPE_WEBHOOK_SECRET,appUrl:process.env.APP_URL,production:process.env.NODE_ENV==='production'});
+app.use(express.static(resolve('dist')));
+app.get('/{*path}',(req,res)=>res.sendFile(resolve('dist/index.html')));
+const mailer=nodemailer.createTransport({host:process.env.SMTP_HOST,port:Number(process.env.SMTP_PORT||465),secure:process.env.SMTP_PORT!=='587',requireTLS:process.env.SMTP_PORT==='587',auth:{user:process.env.SMTP_USER,pass:process.env.SMTP_PASS}});
+const run=deliveryWorker(db,mailer,process.env.MAIL_FROM);const timer=setInterval(run,5000);run();
+const server=app.listen(process.env.PORT||3000,()=>console.log('Nexus API and receipt worker ready'));
+process.on('SIGTERM',()=>{clearInterval(timer);server.close(()=>process.exit(0));});

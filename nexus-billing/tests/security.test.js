@@ -1,0 +1,29 @@
+import {test,before,after} from 'node:test';
+import assert from 'node:assert/strict';
+import request from 'supertest';
+import Stripe from 'stripe';
+import bcrypt from 'bcryptjs';
+import {randomUUID} from 'node:crypto';
+import {database} from '../server/db.js';
+import {createApp} from '../server/app.js';
+import {deliveryWorker} from '../server/worker.js';
+const db=database(':memory:'),realStripe=new Stripe('sk_test_placeholder'),webhookSecret='whsec_test',origin='http://localhost:5173';
+const ids={admin:randomUUID(),a:randomUUID(),b:randomUUID(),invoice:randomUUID()};let cookies={},calls=[];
+const stripe={webhooks:realStripe.webhooks,checkout:{sessions:{create:async(p,o)=>{calls.push({p,o});await new Promise(r=>setTimeout(r,20));return{id:'cs_test_shared',url:'https://checkout.stripe.com/test'};},retrieve:async()=>({status:'open',url:'https://checkout.stripe.com/test'})}}};
+const app=createApp({db,stripe,secret:'test-secret-of-at-least-32-characters',webhookSecret,appUrl:origin});
+before(async()=>{for(const [key,role]of [['admin','Admin'],['a','Client'],['b','Client']]){db.prepare('INSERT INTO users VALUES(?,?,?,?,?)').run(ids[key],key+'@test.com',key,await bcrypt.hash('password123456',4),role);const r=await request(app).post('/api/auth/login').set('Origin',origin).send({email:key+'@test.com',password:'password123456'});assert.equal(r.status,200);cookies[key]=r.headers['set-cookie'][0].split(';')[0];}db.prepare('INSERT INTO invoices(id,client_id,description,amount,due_date) VALUES(?,?,?,?,?)').run(ids.invoice,ids.a,'Consulting',25000,'2026-12-01');});
+after(()=>db.close());
+function auth(r,who='a'){return r.set('Cookie',cookies[who]).set('Origin',origin);}
+function event(overrides={}){const a=db.prepare('SELECT id FROM attempts WHERE invoice_id=?').get(ids.invoice);return {id:'evt_paid',type:'checkout.session.completed',data:{object:{id:'cs_test_shared',mode:'payment',payment_status:'paid',amount_total:25000,currency:'usd',payment_intent:'pi_test',metadata:{invoiceId:ids.invoice,attemptId:a?.id},...overrides}}};}
+function webhook(e){const payload=JSON.stringify(e),signature=realStripe.webhooks.generateTestHeaderString({payload,secret:webhookSecret});return request(app).post('/api/webhooks/stripe').set('Content-Type','application/json').set('stripe-signature',signature).send(payload);}
+test('anonymous cannot read protected routes',async()=>{for(const path of ['/api/invoices','/api/admin/dashboard','/api/invoices/'+ids.invoice+'/pdf'])assert.equal((await request(app).get(path)).status,401);});
+test('client cannot access admin APIs or forge role',async()=>{assert.equal((await auth(request(app).get('/api/admin/dashboard'))).status,403);assert.equal((await auth(request(app).post('/api/admin/invoices')).send({role:'Admin'})).status,403);});
+test('IDOR blocked for detail, PDF and checkout',async()=>{for(const [method,suffix] of [['get',''],['get','/pdf'],['post','/checkout']])assert.equal((await auth(request(app)[method]('/api/invoices/'+ids.invoice+suffix),'b')).status,403);assert.deepEqual((await auth(request(app).get('/api/invoices'),'b')).body,[]);});
+test('untrusted origins cannot mutate',async()=>{assert.equal((await request(app).post('/api/invoices/'+ids.invoice+'/checkout').set('Cookie',cookies.a).set('Origin','https://evil.test')).status,403);});
+test('admin creates invoice with server-side amount validation',async()=>{const body={clientId:ids.b,description:'Design',amount:1000,dueDate:'2026-12-10'};assert.equal((await auth(request(app).post('/api/admin/invoices'),'admin').send({...body,amount:-1})).status,400);assert.equal((await auth(request(app).post('/api/admin/invoices'),'admin').send(body)).status,201);});
+test('concurrent checkout requests use identical Stripe key and payload',async()=>{const responses=await Promise.all(Array.from({length:6},()=>auth(request(app).post('/api/invoices/'+ids.invoice+'/checkout')).send({amount:1})));assert.ok(responses.every(r=>r.status===200));assert.equal(new Set(calls.map(c=>c.o.idempotencyKey)).size,1);assert.equal(new Set(calls.map(c=>JSON.stringify(c.p))).size,1);assert.equal(calls[0].p.line_items[0].price_data.unit_amount,25000);});
+test('invalid webhook signature rejected',async()=>{assert.equal((await request(app).post('/api/webhooks/stripe').send(event())).status,400);assert.equal(db.prepare('SELECT status FROM invoices WHERE id=?').get(ids.invoice).status,'Outstanding');});
+test('signed webhook amount mismatch rejected',async()=>{assert.equal((await webhook(event({amount_total:1}))).status,500);});
+test('unpaid event never marks invoice paid',async()=>{assert.equal((await webhook(event({payment_status:'unpaid'}))).status,200);assert.equal(db.prepare('SELECT status FROM invoices WHERE id=?').get(ids.invoice).status,'Outstanding');});
+test('verified webhook is idempotent and queues one receipt',async()=>{assert.equal((await webhook(event())).status,200);assert.equal((await webhook(event())).status,200);assert.equal(db.prepare('SELECT status FROM invoices WHERE id=?').get(ids.invoice).status,'Paid');assert.equal(db.prepare('SELECT count(*) n FROM deliveries').get().n,1);assert.equal((await auth(request(app).post('/api/invoices/'+ids.invoice+'/checkout'))).status,409);});
+test('PDF and email delivery retry persists; paid PDF downloadable',async()=>{let sends=0;const run=deliveryWorker(db,{sendMail:async m=>{sends++;assert.ok(m.attachments[0].content.subarray(0,4).equals(Buffer.from('%PDF')));if(sends===1)throw Error('SMTP down');}},'billing@test.com');await run();assert.equal(db.prepare('SELECT sent FROM deliveries').get().sent,0);db.prepare('UPDATE deliveries SET next_try=0').run();await run();await run();assert.equal(sends,2);assert.equal(db.prepare('SELECT sent FROM deliveries').get().sent,1);const r=await auth(request(app).get('/api/invoices/'+ids.invoice+'/pdf'));assert.equal(r.status,200);assert.match(r.headers['content-disposition'],/attachment/);});
